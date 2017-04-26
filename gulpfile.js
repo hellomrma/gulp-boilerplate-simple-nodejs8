@@ -71,7 +71,7 @@ gulp.task('minify-css', function () {
         }));
 });
 
-gulp.task('images', ['clean-img-folders'], function () {
+gulp.task('images', ['clean-img-files'], function () {
     return gulp.src(paths.images)
         .pipe(imagemin())
         .pipe(gulp.dest(bases.dest + 'img'))
@@ -80,12 +80,12 @@ gulp.task('images', ['clean-img-folders'], function () {
         }));
 });
 
-gulp.task('clean-img-folders', function () {
-    return del(bases.dest + 'img');
+gulp.task('clean-img-files', function () {
+    return del(bases.dest + 'img/**/*.*');
 });
 
-gulp.task('clean-css-folders', function () {
-    return del(bases.dest + 'css');
+gulp.task('clean-css-files', function () {
+    return del(bases.dest + 'css/**/*.*');
 });
 
 gulp.task('clean-min-js-files', function () {
@@ -93,14 +93,14 @@ gulp.task('clean-min-js-files', function () {
 });
 
 gulp.task('generate-sass', function () {
-    runSequence('clean-css-folders', 'sass', 'minify-css');
+    runSequence('clean-css-files', 'sass', 'minify-css', 'html');
 });
 
 gulp.task('watch', function () {
-    gulp.watch(paths.js, ['minify-js']);
     watch([paths.scss], function () {
         gulp.start('generate-sass');
     });
+    gulp.watch(paths.js, ['minify-js']);
     watch([paths.images], function () {
         gulp.start('images');
     });
