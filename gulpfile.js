@@ -7,19 +7,17 @@ const uglify = require('gulp-uglify');
 const cssmin = require('gulp-cssmin');
 const rename = require('gulp-rename');
 const autoprefixer = require('gulp-autoprefixer');
-const spritesmith = require('gulp.spritesmith-multi')
-const merge = require('merge-stream')
 const imagemin = require('gulp-imagemin')
 const runSequence = require('run-sequence')
 const del = require('del')
 const watch = require('gulp-watch')
-const concatCss = require('gulp-concat-css')
 const browserSync = require('browser-sync').create();
 
 const bases = {
     src: './src/',
     dest: './'
 };
+
 const paths = {
     js: bases.dest + 'js/apps/**/*.js',
     scss: bases.src + 'scss/**/*.scss',
