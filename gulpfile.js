@@ -18,12 +18,12 @@ const browserSync = require('browser-sync').create();
 
 const bases = {
     src: './src/',
-    dist: './'
+    dest: './'
 };
 const paths = {
-    js: bases.dist + 'js/apps/**/*.js',
+    js: bases.dest + 'js/apps/**/*.js',
     scss: bases.src + 'scss/**/*.scss',
-    html: bases.dist + '**/*.html',
+    html: bases.dest + '**/*.html',
     images: bases.src + 'img/**/*.*'
 };
 
@@ -38,7 +38,7 @@ gulp.task('minify-js', ['clean-min-js-files'], function () {
     return gulp.src(paths.js)
         .pipe(concat('project-name.min.js'))
         .pipe(uglify())
-        .pipe(gulp.dest(bases.dist + 'js'))
+        .pipe(gulp.dest(bases.dest + 'js'))
         .pipe(browserSync.reload({
             stream: true
         }));
@@ -55,43 +55,43 @@ gulp.task('sass', function () {
             browsers: ['last 2 version', 'safari 5', 'ie 7', 'ie 8', 'ie 9', 'ios 6', 'android 4'],
             cascade: false
         }))
-        .pipe(gulp.dest(bases.dist + 'css'))
+        .pipe(gulp.dest(bases.dest + 'css'))
         .pipe(browserSync.reload({
             stream: true
         }));
 });
 
 gulp.task('minify-css', function () {
-    gulp.src([bases.dist + 'css/**/*.css', '!./css/**/*.min.css'])
+    gulp.src([bases.dest + 'css/**/*.css', '!./css/**/*.min.css'])
         .pipe(cssmin())
         .pipe(rename({
             suffix: '.min'
         }))
-        .pipe(gulp.dest(bases.dist + 'css'))
+        .pipe(gulp.dest(bases.dest + 'css'))
         .pipe(browserSync.reload({
             stream: true
         }));
 });
 
 gulp.task('images', ['clean-img-folders'], function () {
-    return gulp.src(bases.src + 'img/**/*.*')
+    return gulp.src(paths.images)
         .pipe(imagemin())
-        .pipe(gulp.dest(bases.dist + 'img'))
+        .pipe(gulp.dest(bases.dest + 'img'))
         .pipe(browserSync.reload({
             stream: true
         }));
 });
 
 gulp.task('clean-img-folders', function () {
-    return del(bases.dist + 'img/**/*.*');
+    return del(bases.dest + 'img');
 });
 
 gulp.task('clean-css-folders', function () {
-    return del(bases.dist + 'css');
+    return del(bases.dest + 'css');
 });
 
 gulp.task('clean-min-js-files', function () {
-    return del(bases.dist + 'js/*.min.js');
+    return del(bases.dest + 'js/*.min.js');
 });
 
 gulp.task('generate-sass', function () {
@@ -100,14 +100,16 @@ gulp.task('generate-sass', function () {
 
 gulp.task('watch', function () {
     gulp.watch(paths.js, ['minify-js']);
-    gulp.watch(paths.images, ['images']);
     watch([paths.scss], function () {
         gulp.start('generate-sass');
+    });
+    watch([paths.images], function () {
+        gulp.start('images');
     });
     gulp.watch(paths.html, ['html']);
 });
 
-gulp.task('init-dist-resources', function () {
+gulp.task('init-resources', function () {
     gulp.start('generate-sass');
     gulp.start('minify-js');
     gulp.start('images');
@@ -117,9 +119,9 @@ gulp.task('init-dist-resources', function () {
 gulp.task('server', function () {
     browserSync.init({
         server: {
-            baseDir: bases.dist
+            baseDir: bases.dest
         }
     });
 });
 
-gulp.task('default', ['init-dist-resources', 'server', 'watch']);
+gulp.task('default', ['init-resources', 'server', 'watch']);
