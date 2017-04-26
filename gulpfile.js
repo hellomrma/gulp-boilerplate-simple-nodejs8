@@ -1,6 +1,5 @@
 const gulp = require('gulp');
 const sass = require('gulp-sass');
-const less = require('gulp-less');
 const sourcemaps = require('gulp-sourcemaps');
 const concat = require('gulp-concat');
 const uglify = require('gulp-uglify');
@@ -122,4 +121,4 @@ gulp.task('server', function () {
     });
 });
 
-gulp.task('default', ['init-resources', 'server', 'watch']);
+gulp.task('default', ['init-resources', 'watch', 'server']);
