@@ -10,8 +10,8 @@ gulp
 ## Features
 1. Sass (compiles to CSS)
 2. CSS Minify
-3. JS Minify (not include vendors folder)
-4. Image Sprite Generate
+3. JS Minify (not include library folder)
+4. Image Optimization
 5. HTML, CSS, JS LiveReload
 
 ## Structure
