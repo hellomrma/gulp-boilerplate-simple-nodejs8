@@ -113,7 +113,7 @@ gulp.task('init-resources', function () {
     gulp.start('html');
 })
 
-gulp.task('server', function () {
+gulp.task('server', ['watch'], function () {
     browserSync.init({
         server: {
             baseDir: bases.dest
@@ -121,4 +121,4 @@ gulp.task('server', function () {
     });
 });
 
-gulp.task('default', ['init-resources', 'watch', 'server']);
+gulp.task('default', ['init-resources', 'server']);
