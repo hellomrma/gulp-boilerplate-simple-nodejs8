@@ -18,10 +18,10 @@ const bases = {
 };
 
 const paths = {
-    js: bases.dest + 'js/apps/**/*.js',
     scss: bases.src + 'scss/**/*.scss',
-    html: bases.dest + '**/*.html',
-    images: bases.src + 'img/**/*.*'
+    images: bases.src + 'img/**/*.*',
+    js: bases.dest + 'js/apps/**/*.js',
+    html: bases.dest + '**/*.html'
 };
 
 gulp.task('html', function () {
@@ -92,7 +92,7 @@ gulp.task('clean-min-js-files', function () {
 });
 
 gulp.task('generate-sass', function () {
-    runSequence('clean-css-files', 'sass', 'minify-css', 'html');
+    runSequence('sass', 'minify-css');
 });
 
 gulp.task('watch', function () {
@@ -107,11 +107,12 @@ gulp.task('watch', function () {
 });
 
 gulp.task('init-resources', function () {
+    gulp.start('clean-css-files');
     gulp.start('generate-sass');
     gulp.start('minify-js');
     gulp.start('images');
     gulp.start('html');
-})
+});
 
 gulp.task('server', ['watch'], function () {
     browserSync.init({
