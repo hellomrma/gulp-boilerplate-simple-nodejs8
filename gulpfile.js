@@ -1,37 +1,41 @@
-const gulp = require('gulp');
-const sass = require('gulp-sass');
-const sourcemaps = require('gulp-sourcemaps');
-const concat = require('gulp-concat');
-const uglify = require('gulp-uglify');
-const cssmin = require('gulp-cssmin');
-const rename = require('gulp-rename');
-const autoprefixer = require('gulp-autoprefixer');
-const imagemin = require('gulp-imagemin')
-const runSequence = require('run-sequence')
-const del = require('del')
-const watch = require('gulp-watch')
-const browserSync = require('browser-sync').create();
+var gulp = require('gulp');
+var sass = require('gulp-sass');
+var sourcemaps = require('gulp-sourcemaps');
+var concat = require('gulp-concat');
+var uglify = require('gulp-uglify');
+var cssmin = require('gulp-cssmin');
+var rename = require('gulp-rename');
+var autoprefixer = require('gulp-autoprefixer');
+var spritesmith = require('gulp.spritesmith-multi');
+var merge = require('merge-stream');
+var imagemin = require('gulp-imagemin');
+var runSequence = require('run-sequence');
+var del = require('del');
+var watch = require('gulp-watch');
+var concatCss = require('gulp-concat-css');
+var browserSync = require('browser-sync').create();
 
-const bases = {
+var bases = {
     src: './src/',
     dest: './'
 };
 
-const paths = {
+var paths = {
     scss: bases.src + 'scss/**/*.scss',
     images: bases.src + 'img/**/*.*',
     js: bases.dest + 'js/apps/**/*.js',
-    html: bases.dest + '**/*.html'
+    html: bases.dest + '**/*.html',
+    sprites: bases.src + 'img/sprites/**/*.*'
 };
 
-gulp.task('html', function () {
+gulp.task('html', function() {
     return gulp.src([paths.html, '!./node_modules/**/*.*'])
         .pipe(browserSync.reload({
             stream: true
         }));
 });
 
-gulp.task('minify-js', ['clean-min-js-files'], function () {
+gulp.task('minify-js', ['clean-min-js-files'], function() {
     return gulp.src(paths.js)
         .pipe(concat('project-name.min.js'))
         .pipe(uglify())
@@ -41,7 +45,7 @@ gulp.task('minify-js', ['clean-min-js-files'], function () {
         }));
 });
 
-gulp.task('sass', function () {
+gulp.task('sass', function() {
     return gulp.src(paths.scss)
         .pipe(sourcemaps.init())
         .pipe(sass({
@@ -58,7 +62,7 @@ gulp.task('sass', function () {
         }));
 });
 
-gulp.task('minify-css', function () {
+gulp.task('minify-css', function() {
     gulp.src([bases.dest + 'css/**/*.css', '!./css/**/*.min.css'])
         .pipe(cssmin())
         .pipe(rename({
@@ -70,7 +74,7 @@ gulp.task('minify-css', function () {
         }));
 });
 
-gulp.task('images', ['clean-img-files'], function () {
+gulp.task('images', function() {
     return gulp.src(paths.images)
         .pipe(imagemin())
         .pipe(gulp.dest(bases.dest + 'img'))
@@ -79,42 +83,75 @@ gulp.task('images', ['clean-img-files'], function () {
         }));
 });
 
-gulp.task('clean-img-files', function () {
+gulp.task('sprites', function() {
+    var opts = {
+        spritesmith: function(options, sprite, icons) {
+            options.imgPath = `../img/sprites/${options.imgName}`;
+            options.cssName = `${sprite}-sprites.css`;
+            options.cssTemplate = null;
+            options.cssSpritesheetName = sprite;
+            options.padding = 4;
+            options.cssVarMap = function(sp) {
+                sp.name = `${sprite}-${sp.name}`;
+            };
+            return options;
+        }
+    };
+    var spriteData = gulp.src('./src/img/sprites/**/*.png').pipe(spritesmith(opts)).on('error', function(err) {
+        console.log(err)
+    });
+
+    var imgStream = spriteData.img.pipe(gulp.dest('./img/sprites'));
+    var cssStream = spriteData.css.pipe(gulp.dest('./css/sprites'));
+
+    return merge(imgStream, cssStream);
+});
+
+gulp.task('sprites-css-concat', function() {
+    return gulp.src(bases.dest + 'css/sprites/**/*.css')
+        .pipe(concatCss("sprites.css"))
+        .pipe(gulp.dest(bases.dest + 'css/sprites'));
+});
+
+gulp.task('clean-img-files', function() {
     return del(bases.dest + 'img/**/*.*');
 });
 
-gulp.task('clean-css-files', function () {
+gulp.task('clean-css-files', function() {
     return del(bases.dest + 'css/**/*.*');
 });
 
-gulp.task('clean-min-js-files', function () {
+gulp.task('clean-min-js-files', function() {
     return del(bases.dest + 'js/*.min.js');
 });
 
-gulp.task('generate-sass', function () {
-    runSequence('sass', 'minify-css');
+gulp.task('generate-sass', function() {
+    runSequence('clean-css-files', 'sprites', 'sass', 'sprites-css-concat', 'minify-css');
 });
 
-gulp.task('watch', function () {
-    watch([paths.scss], function () {
+gulp.task('generate-images-sprites', function() {
+    runSequence('clean-css-files', 'clean-img-files', 'images', 'sprites', 'sass', 'sprites-css-concat', 'minify-css');
+});
+
+gulp.task('watch', function() {
+    watch([paths.scss], function() {
         gulp.start('generate-sass');
     });
     gulp.watch(paths.js, ['minify-js']);
-    watch([paths.images], function () {
-        gulp.start('images');
+    watch([paths.images], function() {
+        gulp.start('generate-images-sprites');
     });
     gulp.watch(paths.html, ['html']);
 });
 
-gulp.task('init-resources', function () {
+gulp.task('init-resources', function() {
     gulp.start('clean-css-files');
-    gulp.start('generate-sass');
     gulp.start('minify-js');
-    gulp.start('images');
+    gulp.start('generate-images-sprites');
     gulp.start('html');
 });
 
-gulp.task('server', ['watch'], function () {
+gulp.task('server', ['watch'], function() {
     browserSync.init({
         server: {
             baseDir: bases.dest
