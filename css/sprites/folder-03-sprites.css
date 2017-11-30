@@ -22,15 +22,9 @@ To change `display` (e.g. `display: inline-block;`), we suggest using a common C
   width: 16px;
   height: 16px;
 }
-.icon-folder-03-sp-03-02 - 복사본 {
-  background-image: url(../img/sprites/folder-03.png);
-  background-position: -20px 0px;
-  width: 5px;
-  height: 9px;
-}
 .icon-folder-03-sp-03-02 {
   background-image: url(../img/sprites/folder-03.png);
-  background-position: -29px 0px;
+  background-position: -20px 0px;
   width: 5px;
   height: 9px;
 }

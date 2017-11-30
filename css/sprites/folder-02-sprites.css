@@ -28,33 +28,9 @@ To change `display` (e.g. `display: inline-block;`), we suggest using a common C
   width: 11px;
   height: 11px;
 }
-.icon-folder-02-sp-02-03 - 복사본 (2) {
-  background-image: url(../img/sprites/folder-02.png);
-  background-position: 0px -17px;
-  width: 9px;
-  height: 9px;
-}
-.icon-folder-02-sp-02-03 - 복사본 (3) {
-  background-image: url(../img/sprites/folder-02.png);
-  background-position: -13px -17px;
-  width: 9px;
-  height: 9px;
-}
-.icon-folder-02-sp-02-03 - 복사본 (4) {
-  background-image: url(../img/sprites/folder-02.png);
-  background-position: -32px 0px;
-  width: 9px;
-  height: 9px;
-}
-.icon-folder-02-sp-02-03 - 복사본 {
-  background-image: url(../img/sprites/folder-02.png);
-  background-position: -32px -13px;
-  width: 9px;
-  height: 9px;
-}
 .icon-folder-02-sp-02-03 {
   background-image: url(../img/sprites/folder-02.png);
-  background-position: 0px -30px;
+  background-position: 0px -17px;
   width: 9px;
   height: 9px;
 }
