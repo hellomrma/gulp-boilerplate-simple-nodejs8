@@ -1,0 +1,230 @@
+/* Webfont */
+
+/* 
+- 필요에 따라 선택적 활용 사용 - css 최상단 선언
+- 모바일/IE8 이하 웹폰트 미지원 일 경우 .eot 선언 제거 및 src:local(*); 추가
+- 미사용시 삭제 */
+
+/* nanumbarungothic */
+
+@font-face {
+  font-family: 'NanumBarunGothic';
+  src: url(font/NanumBarunGothic.eot);
+  src: url(font/NanumBarunGothic.eot?#iefix) format('embedded-opentype'), url(font/NanumBarunGothic.woff) format('woff'), url(font/NanumBarunGothic.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'NanumBarunGothic';
+  font-weight: bold;
+  src: url(font/NanumBarunGothicBold.eot);
+  src: url(font/NanumBarunGothicBold.eot?#iefix) format('embedded-opentype'), url(font/NanumBarunGothicBold.woff) format('woff'), url(font/NanumBarunGothicBold.ttf) format('truetype');
+}
+
+/* nanumgothic */
+
+font-face {
+  font-family: 'NanumGothic';
+  src: url(font/NanumGothic.eot);
+  src: url(font/NanumGothic.eot?#iefix) format('embedded-opentype'), url(font/NanumGothic.woff) format('woff'), url(font/NanumGothic.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'NanumGothic';
+  src: url(font/NanumGothic-Regular.eot);
+  src: url(font/NanumGothic-Regular.eot?#iefix) format('embedded-opentype'), url(font/NanumGothic-Regular.woff) format('woff'), url(font/NanumGothic-Regular.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'NanumGothic';
+  font-weight: 600;
+  src: url(font/NanumGothic-Bold.eot);
+  src: url(font/NanumGothic-Bold.eot?#iefix) format('embedded-opentype'), url(font/NanumGothic-Bold.woff) format('woff'), url(font/NanumGothic-Bold.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'NanumGothic';
+  font-weight: 800;
+  src: url(font/NanumGothic-ExtraBold.eot);
+  src: url(font/NanumGothic-ExtraBold.eot?#iefix) format('embedded-opentype'), url(font/NanumGothic-ExtraBold.woff) format('woff'), url(font/NanumGothic-ExtraBold.ttf) format('truetype');
+}
+
+/* Roboto */
+
+@font-face {
+  font-family: 'Roboto';
+  src: url(font/Roboto-Light-webfont.eot);
+  src: url(font/Roboto-Light-webfont.eot?#iefix) format('embedded-opentype'), url(font/Roboto-Light-webfont.woff) format('woff'), url(font/Roboto-Light-webfont.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'Roboto';
+  font-weight: 600;
+  src: url(font/Roboto-Medium-webfont.eot);
+  src: url(font/Roboto-Medium-webfont.eot?#iefix) format('embedded-opentype'), url(font/Roboto-Medium-webfont.woff) format('woff'), url(font/Roboto-Medium-webfont.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'RobotoThin';
+  src: url(font/Roboto-Thin.eot);
+  src: url(font/Roboto-Thin.eot?#iefix) format('embedded-opentype'), url(font/Roboto-Thin.woff) format('woff'), url(font/Roboto-Thin.ttf) format('truetype');
+}
+/* Reset */
+
+body,
+div,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+table,
+th,
+td,
+form,
+fieldset,
+legend,
+textarea,
+input,
+select,
+textarea,
+button,
+article,
+aside,
+dialog,
+footer,
+header,
+section,
+footer,
+nav,
+figure,
+main {
+  margin: 0;
+  padding: 0;
+}
+
+article,
+aside,
+dialog,
+footer,
+header,
+section,
+footer,
+nav,
+figure,
+main {
+  display: block;
+}
+
+html,
+body {
+  height: 100%;
+  -webkit-text-size-adjust: none;
+  -ms-text-size-adjust: none;
+}
+
+body,
+input,
+select,
+textarea,
+button {
+  font-family: 'Apple SD Gothic Neo', '돋움', Dotum, sans-serif;
+  font-size: 12px;
+}
+
+/* body,input,select,textarea,button{font-family:NanumBarunGothic,'나눔바른고딕','Nanum BarunGothic','Malgun Gothic','맑은고딕','Apple SD Gothic Neo',Dotum,'돋움',sans-serif} */
+
+/* body,input,select,textarea,button{font-family:NanumGothic,'나눔고딕','Nanum Gothic','Malgun Gothic','맑은고딕','Apple SD Gothic Neo',Dotum,'돋움',sans-serif} */
+
+/* body,input,select,textarea,button{font-family:'Roboto','Roboto Thin',Helvetica,tahoma,sans-serif} */
+
+fieldset,
+li,
+img {
+  border: 0;
+  vertical-align: top;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+button {
+  overflow: visible;
+  border: 0;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+button::-moz-focus-inner {
+  padding: 0;
+  border: 0;
+}
+
+address,
+caption,
+em {
+  font-style: normal;
+}
+
+a,
+a:focus,
+a:active,
+a:hover {
+  text-decoration: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.blind,
+caption span,
+legend {
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 1px;
+  font-size: 1px;
+  line-height: 100px;
+  white-space: nowrap;
+}
+
+.skip {
+  height: 0;
+}
+
+.skip a {
+  display: block;
+  position: absolute;
+  left: 0;
+  top: -100px;
+  width: 100%;
+  height: 25px;
+  text-align: center;
+}
+
+.skip a:focus,
+#skip a:active {
+  position: absolute;
+  top: 0;
+  z-index: 100;
+  padding: 10px 0;
+  background: #000;
+  font-weight: bold;
+  color: #fff;
+  font-size: 20px;
+  text-decoration: none;
+}
+

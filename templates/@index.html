@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0">
+<title><%= project.projectName %> : 마크업 산출물</title> 
+<style>
+@import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,p,table,th,td,form,fieldset,legend,textarea,input,select,textarea,button{margin:0;padding:0;line-height:1.7;font-family:'Nanum Gothic'}
+html,body{height:100%}
+ul,ol{list-style:none}
+a,a:focus,a:active,a:hover{color:#333}
+main{padding:0 3% 50px}
+h1{background:#000;color:#fff;padding:20px;font-size:24px}
+h2{padding:7px;border-bottom:2px solid #333;font-size:18px}
+nav{margin:10px 10px 35px;padding:20px;background:#eee}
+nav li{border-bottom:1px solid #dfdfdf}
+nav li a{display:block;background:url(http://static.naver.com/www/m/cm/im/bu_lk.gif) no-repeat 100% 50%;text-decoration:underline;font-size:12px;line-height:2.4;vertical-align: middle}
+.page-lst {margin-bottom:35px}
+.page-lst li{position:relative;padding-left:10px;border-bottom:1px solid #dfdfdf}
+.page-lst li a{display:block;padding:8px 0;font-size:12px;text-decoration: none}
+.page-lst li .file-name{color:#767676}
+.page-lst li .status{margin-left:10px;padding:0 2px;font-size:11px;background:red;color:#fff;text-transform:uppercase}
+footer{background:#000;color:#fff;padding:20px;text-align:center;font-size:11px}
+footer strong{text-transform: uppercase;}
+</style>
+<!--[if lt IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js></script>
+<![endif]-->
+</head> 
+<body>
+<header>
+    <h1><%= project.projectName %> : 마크업 산출물</h1> 
+    <nav>
+    	<ul>
+    		<li><a href="#tab_doc">Document</a></li><% for (var i=0; i < 100 ; i++){
+    		var categoryNum = String("0" + i).slice(-2);
+			var colIndex = 0;
+			var nfileList = projectObjJson.nfiles;
+			for(var j=0 ; j < nfileList.length; j++){
+				if (categoryNum == nfileList[j].category){
+					if (colIndex == 0){ %>
+			<li><a href="#tab<%= categoryNum %>"><%= nfileList[j].categoryText %></a></li><%} 
+					colIndex++; 
+				} 
+			} 
+		}%>
+		</ul>
+	</nav>
+</header>
+<main>
+    <section>
+		<h2 id="tab_doc" class="sec_h">Document</h2>
+		<ul class="page-lst"> <%
+			var dfileList = projectObjJson.dfiles;
+			for(var i=0 ; i < dfileList.length; i++){ %> 
+			<li>
+				<a href="views/<%= dfileList[i].name %>">
+					<%= dfileList[i].categoryText %> 
+					<span class="file-name">:: views / <%= dfileList[i].name %></span>
+				</a>
+			</li><%} %> 
+		</ul><% 
+    		var today = new Date();
+    		today = Date.parse(today);
+    		for (var i=0; i < 100 ; i++){
+				var categoryNum = String("0" + i).slice(-2);
+				var listCount = 0;
+				var nfileList = projectObjJson.nfiles;
+				var lastCategory = nfileList[nfileList.length - 1].category;			
+				for(var j=0 ; j < nfileList.length; j++){
+					if (categoryNum == nfileList[j].category){
+						if (listCount == 0){ %>
+		<h2 id="tab<%= categoryNum %>" class="sec_h"><%= nfileList[j].categoryText %></h2>
+		<ul class="page-lst"><%} %> 
+			<li>
+				<a href="views/<%= nfileList[j].name %>">
+					<%= nfileList[j].title %> 
+					<span class="file-name">:: views / <%= nfileList[j].name %></span>
+				</a>
+			</li> <% listCount++; } }  if (categoryNum <= lastCategory) { %>
+		</ul> <%  } } %>
+    </section>
+</main>
+<footer>
+	<p><strong>Hivelab</strong> / <%= project.projectOrg %> / <%= project.projectAuthor %></p>
+</footer>
+</body>
+</html>
