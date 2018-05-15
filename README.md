@@ -2,28 +2,30 @@
 Simple Boilerplate for HTML/CSS/JS development based on Gulp.
 
 ## Installation
-```bash
-npm install
-gulp
+1. Install Node.js (https://nodejs.org)
+2. Fork this repository.
+3. Move to folders and Install the dependencies.
+```sh
+$ npm install
+```
+4. After Install dependencies and Run Gulp.
+```sh
+$ gulp
 ```
 
 ## Features
-1. Sass (compiles to CSS)
-2. CSS Minify
-3. JS Minify (not include library folder)
-4. Image Optimization
-5. HTML, CSS, JS LiveReload
+1. CSS Minify
+2. JS Minify (not include library folder)
+3. Image Optimization
+4. HTML, CSS, JS Browsersync
+5. HTML Include
 
 ## Structure
-* css
-* img
-* js
-    * apps
-    * libs
 * src
+    * css
+    * font
     * img
-    * scss
-        * common
-        * mixins
-        * pages
-* views
+    * js
+        * apps
+        * libs
+    * views
